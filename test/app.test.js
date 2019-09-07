@@ -18,3 +18,17 @@ describe('app routes', () => {
     return mongoose.connection.close();
   });
 });
+
+it('can POST to create new habit', () => {
+  return request(app)
+    .post('/api/v1/habits')
+    .send({ name: 'New Jon', description: 'play hard, party hard' })
+    .then(res => {
+      expect(res.body).toEqual({
+        _id: expect.any(String),
+        name: 'New Jon',
+        description: 'play hard, party hard',
+        __v: 0,
+      });
+    });
+});
